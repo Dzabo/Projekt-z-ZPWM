@@ -6,12 +6,60 @@ CHAR szText[200];
 HBITMAP hBitmapMenu;
 HBITMAP hBitmapMenuPlayer;
 HBITMAP hBitmapBoard;
+HBITMAP hBitmapControls;
 HINSTANCE hInst;
 bool is_game_on = false;
 
 void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
 void DrawGameBoard(HDC x);
+void DrawGameControls(HDC x);
+
+INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
+{
+  //HWND hwndGameview = GetDlgItem(hwndDlg, IDD_GAMEVIEW);
+
+  switch (uMsg)
+  {
+
+  case WM_COMMAND:
+  {
+
+    switch (HIWORD(wParam))
+    {
+
+    case BN_CLICKED://Zdarzenie klikniêcia 
+      switch (LOWORD(wParam))
+      {
+
+      default:;
+      }
+    default:;
+    }
+  }
+  return TRUE;
+  case WM_INITDIALOG:
+  {
+    hBitmapControls = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP_CONTROLS));
+  }
+  return TRUE;
+  case WM_PAINT:
+  {
+    HDC hdc = GetDC(hwndDlg);
+    DrawGameControls(hdc);
+    ReleaseDC(hwndDlg, hdc);
+    return DefWindowProc(hwndDlg, uMsg, wParam, lParam);
+  }
+  case WM_CLOSE:
+  {
+    EndDialog(hwndDlg, 0);
+    DestroyWindow(hwndDlg); // zniszczenie okna
+  }
+  return TRUE;
+  default:;
+  }
+  return FALSE;
+}
 
 INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
 {
@@ -156,7 +204,8 @@ INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
       }
       case IDC_BUTTON_CONTROL:
       {
-        MessageBox(hwndDlg, TEXT("Gracz 1 strza³ki, Gracz 2 wsad"), TEXT("Sterowanie"), MB_OK);
+        HWND hwndControlWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_CONTROLVIEW), NULL, DialogControl);
+        ShowWindow(hwndControlWindow, SW_SHOW);
         return TRUE;
       }
       case IDC_BUTTON_END_GAME:
@@ -243,3 +292,11 @@ void DrawGameBoard(HDC x)
   DeleteDC(hDCBitmap);  
 }
 
+void DrawGameControls(HDC x)
+{
+  HDC hDCBitmap;
+  hDCBitmap = CreateCompatibleDC(x);
+  SelectObject(hDCBitmap, hBitmapControls);
+  BitBlt(x, 0, 0, 288, 162, hDCBitmap, 0, 0, SRCCOPY); //szerokosc,wysokosc
+  DeleteDC(hDCBitmap);
+}

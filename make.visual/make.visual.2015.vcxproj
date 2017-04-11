@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\resource\Board.bmp" />
+    <Image Include="..\resource\Controls.bmp" />
     <Image Include="..\resource\Menu.bmp" />
     <Image Include="..\resource\MenuPlayer.bmp" />
     <Image Include="..\source\icon1.ico" />
