@@ -125,9 +125,14 @@
     <ClInclude Include="..\source\res.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\resource\Board.bmp" />
     <Image Include="..\resource\Menu.bmp" />
     <Image Include="..\resource\MenuPlayer.bmp" />
     <Image Include="..\source\icon1.ico" />
+    <Image Include="G:\OWIECZKA\resource\Menu.bmp" />
+    <Image Include="G:\OWIECZKA\resource\MenuPlayer.bmp" />
+    <Image Include="G:\OWIECZKA\source\icon1.ico" />
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

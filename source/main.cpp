@@ -5,17 +5,137 @@
 CHAR szText[200];
 HBITMAP hBitmapMenu;
 HBITMAP hBitmapMenuPlayer;
+HBITMAP hBitmapBoard;
 HINSTANCE hInst;
+bool is_game_on = false;
 
 void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
+void DrawGameBoard(HDC x);
 
-
-INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
+INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
 {
-  HWND hwndGameview = GetDlgItem(hwndDlg, IDD_GAMEVIEW);
-  HWND hwndMainview = GetDlgItem(hwndDlg, IDD_MAINVIEW);
+  //HWND hwndGameview = GetDlgItem(hwndDlg, IDD_GAMEVIEW);
+
+  switch (uMsg)
+  {
+
+  case WM_COMMAND:
+  {
+
+    switch (HIWORD(wParam))
+    {
+
+    case BN_CLICKED://Zdarzenie klikniêcia 
+      switch (LOWORD(wParam))
+      {
+      
+      default:;
+      }
+    default:;
+    }
+  }
+  return TRUE;
+  case WM_INITDIALOG:
+  {
+    hBitmapBoard = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP_BOARD));
+  }
+  return TRUE;
+  case WM_PAINT:
+  {
+    HDC hdc = GetDC(hwndDlg);
+    DrawGameBoard(hdc);
+    ReleaseDC(hwndDlg, hdc);
+    return DefWindowProc(hwndDlg, uMsg, wParam, lParam);
+  }
+  case WM_CLOSE:
+  {
+    is_game_on = false;
+    EndDialog(hwndDlg, 0);
+    DestroyWindow(hwndDlg); // zniszczenie okna
+  }
+  return TRUE;
+  default:;
+  }
+  return FALSE;
+}
+
+INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
+{
   HWND hwndPlayerview = GetDlgItem(hwndDlg, IDD_PLAYERVIEW);
+
+  switch (uMsg)
+  {
+
+  case WM_COMMAND:
+  {
+
+    switch (HIWORD(wParam))
+    {
+
+    case BN_CLICKED://Zdarzenie klikniêcia 
+      switch (LOWORD(wParam))
+      {
+      case IDC_BUTTON_PLAYER_SINGLE:
+      {
+        if (is_game_on == false)
+        {
+          HWND hwndGameWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), hwndPlayerview, DialogGame);
+          ShowWindow(hwndGameWindow, SW_SHOW);
+          is_game_on = true;
+        }
+        return TRUE;
+      }
+
+      case IDC_BUTTON_PLAYER_MULTI:
+      {
+        if (is_game_on == false)
+        {
+          HWND hwndGameWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), hwndPlayerview, DialogGame);
+          ShowWindow(hwndGameWindow, SW_SHOW);
+          is_game_on = true;
+        }
+        return TRUE;
+      }
+      case IDC_BUTTON_GOBACK:
+      {
+        EndDialog(hwndDlg, 0);
+        DestroyWindow(hwndDlg); // zniszczenie okna
+        return TRUE;
+      }
+      default:;
+      }
+    default:;
+    }
+  }
+  return TRUE;
+  case WM_INITDIALOG:
+  {
+    hBitmapMenuPlayer = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP_MENUPLAYER));
+  }
+  return TRUE;
+  case WM_PAINT:
+  {
+    HDC hdc = GetDC(hwndDlg);
+    DrawMenuPlayer(hdc);
+    ReleaseDC(hwndDlg, hdc);
+    return DefWindowProc(hwndDlg, uMsg, wParam, lParam);
+  }
+  case WM_CLOSE:
+  {
+    EndDialog(hwndDlg, 0);
+    DestroyWindow(hwndDlg); // zniszczenie okna
+  }
+  return TRUE;
+  default:;
+  }
+  return FALSE;
+}
+
+INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
+{
+  HWND hwndMainview = GetDlgItem(hwndDlg, IDD_MAINVIEW);
+  
   switch (uMsg)
   {
 
@@ -30,21 +150,8 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
       {
       case IDC_BUTTON_NEW_GAME:
       {
-        HWND hwndPlayerWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_PLAYERVIEW), hwndMainview, DialogProc);
+        HWND hwndPlayerWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_PLAYERVIEW), NULL, DialogPlayer);
         ShowWindow(hwndPlayerWindow, SW_SHOW);
-        return TRUE;
-      }
-      case IDC_BUTTON_PLAYER_SINGLE:
-      {
-        HWND hwndGameWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), hwndPlayerview, DialogProc);
-        ShowWindow(hwndGameWindow, SW_SHOW);
-        return TRUE;
-
-      }
-      case IDC_BUTTON_PLAYER_MULTI:
-      {
-        HWND hwndGameWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), hwndPlayerview, DialogProc);
-        ShowWindow(hwndGameWindow, SW_SHOW);
         return TRUE;
       }
       case IDC_BUTTON_CONTROL:
@@ -52,8 +159,10 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
         MessageBox(hwndDlg, TEXT("Gracz 1 strza³ki, Gracz 2 wsad"), TEXT("Sterowanie"), MB_OK);
         return TRUE;
       }
-      case IDC_BUTTON_GOBACK:
+      case IDC_BUTTON_END_GAME:
       {
+        DestroyWindow(hwndMainview); // zniszczenie okna
+        PostQuitMessage(0);
         return TRUE;
       }
       default:;
@@ -65,22 +174,18 @@ INT_PTR CALLBACK DialogProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
   case WM_INITDIALOG:
   {
     hBitmapMenu = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP_MENU));
-    hBitmapMenuPlayer = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP_MENUPLAYER));
   }
   return TRUE;
   case WM_PAINT:
   {
     HDC hdc = GetDC(hwndDlg);
-   /* HDC hdc2 = GetDC(hwndMainview);
-    HDC hdc3 = GetDC(hwndPlayerview);*/
     DrawMenu(hdc);
-    DrawMenuPlayer(hdc);
     ReleaseDC(hwndDlg, hdc);
     return DefWindowProc(hwndDlg, uMsg, wParam, lParam);
   }
   case WM_CLOSE:
   {
-    DestroyWindow(hwndDlg); // zniszczenie okna
+    DestroyWindow(hwndMainview); // zniszczenie okna
     PostQuitMessage(0); //Komunikat polecenia zakoñczenia aplikacji
   }
   return TRUE;
@@ -95,7 +200,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 
 
   hInst = hInstance;
-  HWND hwndMainWindow = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_MAINVIEW), NULL, DialogProc);
+  HWND hwndMainWindow = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_MAINVIEW), NULL, DialogMain);
   ShowWindow(hwndMainWindow, iCmdShow);
 
 
@@ -128,6 +233,13 @@ void DrawMenuPlayer(HDC x)
   DeleteDC(hDCBitmap);
   
 }
-/*
-1252x600
-*/
+
+void DrawGameBoard(HDC x)
+{
+  HDC hDCBitmap;
+  hDCBitmap = CreateCompatibleDC(x);
+  SelectObject(hDCBitmap, hBitmapBoard);
+  BitBlt(x, 0, 0, 1250, 600, hDCBitmap, 0, 0, SRCCOPY); //szerokosc,wysokosc
+  DeleteDC(hDCBitmap);  
+}
+

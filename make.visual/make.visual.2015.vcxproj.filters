@@ -39,5 +39,20 @@
     <Image Include="..\resource\MenuPlayer.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\resource\Board.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="G:\OWIECZKA\source\icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="G:\OWIECZKA\resource\Menu.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="G:\OWIECZKA\resource\MenuPlayer.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="icon1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
