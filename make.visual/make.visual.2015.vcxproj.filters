@@ -57,5 +57,29 @@
     <Image Include="..\resource\Controls.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resource\Board.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\source\resource\Board.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\Menu.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\MenuPlayer.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\Controls.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\source\resource\Menu.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\source\resource\MenuPlayer.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\source\resource\Controls.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

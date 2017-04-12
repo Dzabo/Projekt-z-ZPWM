@@ -130,10 +130,18 @@
     <Image Include="..\resource\Menu.bmp" />
     <Image Include="..\resource\MenuPlayer.bmp" />
     <Image Include="..\source\icon1.ico" />
+    <Image Include="..\source\resource\Board.bmp" />
+    <Image Include="..\source\resource\Controls.bmp" />
+    <Image Include="..\source\resource\Menu.bmp" />
+    <Image Include="..\source\resource\MenuPlayer.bmp" />
     <Image Include="G:\OWIECZKA\resource\Menu.bmp" />
     <Image Include="G:\OWIECZKA\resource\MenuPlayer.bmp" />
     <Image Include="G:\OWIECZKA\source\icon1.ico" />
     <Image Include="icon1.ico" />
+    <Image Include="resource\Board.bmp" />
+    <Image Include="resource\Controls.bmp" />
+    <Image Include="resource\Menu.bmp" />
+    <Image Include="resource\MenuPlayer.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
