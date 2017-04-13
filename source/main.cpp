@@ -9,6 +9,8 @@ HBITMAP hBitmapBoard;
 HBITMAP hBitmapControls;
 HINSTANCE hInst;
 bool is_game_on = false;
+bool is_controls_window_open = false;
+bool is_player_window_open = false;
 
 void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
@@ -52,6 +54,7 @@ INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
   }
   case WM_CLOSE:
   {
+    is_controls_window_open = false;
     EndDialog(hwndDlg, 0);
     DestroyWindow(hwndDlg); // zniszczenie okna
   }
@@ -146,6 +149,7 @@ INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
         return TRUE;
       }
       case IDC_BUTTON_GOBACK:
+        is_player_window_open = false;
       {
         EndDialog(hwndDlg, 0);
         DestroyWindow(hwndDlg); // zniszczenie okna
@@ -171,6 +175,7 @@ INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
   }
   case WM_CLOSE:
   {
+    is_player_window_open = false;
     EndDialog(hwndDlg, 0);
     DestroyWindow(hwndDlg); // zniszczenie okna
   }
@@ -198,14 +203,21 @@ INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
       {
       case IDC_BUTTON_NEW_GAME:
       {
-        HWND hwndPlayerWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_PLAYERVIEW), NULL, DialogPlayer);
-        ShowWindow(hwndPlayerWindow, SW_SHOW);
+        if(is_player_window_open==false){
+          HWND hwndPlayerWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_PLAYERVIEW), NULL, DialogPlayer);
+          ShowWindow(hwndPlayerWindow, SW_SHOW);
+          is_player_window_open = true;
+        }
         return TRUE;
       }
       case IDC_BUTTON_CONTROL:
       {
-        HWND hwndControlWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_CONTROLVIEW), NULL, DialogControl);
-        ShowWindow(hwndControlWindow, SW_SHOW);
+        if (is_controls_window_open == false) 
+        {
+          HWND hwndControlWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_CONTROLVIEW), NULL, DialogControl);
+          ShowWindow(hwndControlWindow, SW_SHOW);
+          is_controls_window_open = true;
+        }
         return TRUE;
       }
       case IDC_BUTTON_END_GAME:
