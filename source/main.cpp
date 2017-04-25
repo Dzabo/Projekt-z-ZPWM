@@ -7,6 +7,7 @@ HBITMAP hBitmapMenu;
 HBITMAP hBitmapMenuPlayer;
 HBITMAP hBitmapBoard;
 HBITMAP hBitmapControls;
+HBITMAP hBitmapAuthors;
 HINSTANCE hInst;
 bool is_game_on = false;
 bool is_controls_window_open = false;
@@ -16,6 +17,53 @@ void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
 void DrawGameBoard(HDC x);
 void DrawGameControls(HDC x);
+void DrawAbout(HDC x);
+
+INT_PTR CALLBACK DialogAbout(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
+{
+  //HWND hwndGameview = GetDlgItem(hwndDlg, IDD_GAMEVIEW);
+
+  switch (uMsg)
+  {
+
+  case WM_COMMAND:
+  {
+
+    switch (HIWORD(wParam))
+    {
+
+    case BN_CLICKED://Zdarzenie klikniêcia 
+      switch (LOWORD(wParam))
+      {
+
+      default:;
+      }
+    default:;
+    }
+  }
+  return TRUE;
+  case WM_INITDIALOG:
+  {
+    hBitmapAuthors = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_AUTHORS));
+  }
+  return TRUE;
+  case WM_PAINT:
+  {
+    HDC hdc = GetDC(hwndDlg);
+    DrawAbout(hdc);
+    ReleaseDC(hwndDlg, hdc);
+    return DefWindowProc(hwndDlg, uMsg, wParam, lParam);
+  }
+  case WM_CLOSE:
+  {
+    EndDialog(hwndDlg, 0);
+    DestroyWindow(hwndDlg); // zniszczenie okna
+  }
+  return TRUE;
+  default:;
+  }
+  return FALSE;
+}
 
 INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
 {
@@ -80,7 +128,12 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
     case BN_CLICKED://Zdarzenie klikniêcia 
       switch (LOWORD(wParam))
       {
-      
+      case ID_OGRZE_AUTORZY:
+        {
+        HWND hwndAboutWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), NULL, DialogAbout);
+        ShowWindow(hwndAboutWindow, SW_SHOW);
+        return TRUE;
+        }
       default:;
       }
     default:;
@@ -310,5 +363,14 @@ void DrawGameControls(HDC x)
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapControls);
   BitBlt(x, 0, 0, 288, 162, hDCBitmap, 0, 0, SRCCOPY); //szerokosc,wysokosc
+  DeleteDC(hDCBitmap);
+}
+
+void DrawAbout(HDC x)
+{
+  HDC hDCBitmap;
+  hDCBitmap = CreateCompatibleDC(x);
+  SelectObject(hDCBitmap, hBitmapAuthors);
+  BitBlt(x, 0, 0, 1250, 600, hDCBitmap, 0, 0, SRCCOPY); //szerokosc,wysokosc
   DeleteDC(hDCBitmap);
 }
