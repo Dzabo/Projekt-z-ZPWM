@@ -133,7 +133,6 @@
     <ClInclude Include="..\source\res.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\resource\Autorzy.bmp" />
     <Image Include="..\resource\Board.bmp" />
     <Image Include="..\resource\Controls.bmp" />
     <Image Include="..\resource\Menu.bmp" />

@@ -72,9 +72,6 @@
     <Image Include="..\source\resource\Controls.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\resource\Autorzy.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="..\resource\Board.bmp">
       <Filter>Resource Files</Filter>
     </Image>
