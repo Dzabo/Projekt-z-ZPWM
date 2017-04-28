@@ -83,6 +83,22 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
       {
       case ID_OGRZE_AUTORZY:
         {
+        MessageBox(0, "Super ludzie to zrobili", "Autorzy", MB_OK);
+        return TRUE;
+        }
+      case ID_OGRZE_TUTAJ:
+        {
+        MessageBox(0, "Super informacje o grze", "O grze", MB_OK);
+        return TRUE;
+        }
+      case ID_ROZGRYWKA_ROZPOCZNIJ:
+        {
+        MessageBox(0, "HEHE JESZCZE NIE TERAZ", " ", MB_OK);
+        return TRUE;
+        }
+      case ID_ROZGRYWKA_ZAKONCZ:
+        {
+        MessageBox(0, "Najpierw trzeba zacz¹æ hehe", " ", MB_OK);
         return TRUE;
         }
       default:;
