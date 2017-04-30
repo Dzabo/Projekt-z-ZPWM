@@ -84,5 +84,8 @@
     <Image Include="..\resource\Controls.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\resource\rock29x29.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

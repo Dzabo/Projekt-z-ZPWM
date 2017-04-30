@@ -137,6 +137,7 @@
     <Image Include="..\resource\Controls.bmp" />
     <Image Include="..\resource\Menu.bmp" />
     <Image Include="..\resource\MenuPlayer.bmp" />
+    <Image Include="..\resource\rock29x29.bmp" />
     <Image Include="..\source\icon1.ico" />
     <Image Include="..\source\resource\Board.bmp" />
     <Image Include="..\source\resource\Controls.bmp" />
