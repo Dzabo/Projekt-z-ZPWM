@@ -2,6 +2,22 @@
 #include "res.h"
 #include <stdio.h>
 
+
+#define KEYLEFT 0x25
+#define KEYUP 0x26
+#define KEYRIGHT 0x27
+#define KEYDOWN 0x28
+#define KEYA 0x41
+#define KEYW 0x57
+#define KEYD 0x44
+#define KEYS 0x53
+#define KEYENTER 0x0D
+#define KEYESCAPE 0x1B
+#define STARTX 585
+#define STARTYMIN 290
+#define STARTYMAX 390
+#define ENDX 580
+
 CHAR szText[200];
 HBITMAP hBitmapMenu;
 HBITMAP hBitmapMenuPlayer;
@@ -11,6 +27,7 @@ HINSTANCE hInst;
 bool is_game_on = false;
 bool is_controls_window_open = false;
 bool is_player_window_open = false;
+bool key_tab[10] = { false }; //0-3 arrows 4-7 wsad 8-9 enter escape to start and pause game
 
 void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
@@ -18,7 +35,7 @@ void DrawGameBoard(HDC x);
 void DrawGameControls(HDC x);
 
 
-INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
+INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   //HWND hwndGameview = GetDlgItem(hwndDlg, IDD_GAMEVIEW);
 
@@ -31,7 +48,7 @@ INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
     switch (HIWORD(wParam))
     {
 
-    case BN_CLICKED://Zdarzenie klikniêcia 
+    case BN_CLICKED:
       switch (LOWORD(wParam))
       {
 
@@ -57,7 +74,7 @@ INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
   {
     is_controls_window_open = false;
     EndDialog(hwndDlg, 0);
-    DestroyWindow(hwndDlg); // zniszczenie okna
+    DestroyWindow(hwndDlg); 
   }
   return TRUE;
   default:;
@@ -65,7 +82,7 @@ INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lP
   return FALSE;
 }
 
-INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
+INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   //HWND hwndGameview = GetDlgItem(hwndDlg, IDD_GAMEVIEW);
 
@@ -107,6 +124,115 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
     }
   }
   return TRUE;
+  case WM_KEYDOWN:
+  {
+    if ((wParam == KEYLEFT) && (key_tab[0] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ strza³kê w lewo", "temp", MB_OK);
+      key_tab[0] = true;
+    }
+    if ((wParam == KEYUP) && (key_tab[1] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ strza³kê w górê", "temp", MB_OK);
+      key_tab[1] = true;
+    }
+    if ((wParam == KEYRIGHT) && (key_tab[2] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ strza³kê w prawo", "temp", MB_OK);
+      key_tab[2] = true;
+    }
+    if ((wParam == KEYDOWN) && (key_tab[3] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ strza³kê w dó³", "temp", MB_OK);
+      key_tab[3] = true;
+    }
+    if ((wParam == KEYA) && (key_tab[4] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ a", "temp", MB_OK);
+      key_tab[4] = true;
+    }
+    if ((wParam == KEYW) && (key_tab[5] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ w", "temp", MB_OK);
+      key_tab[5] = true;
+    }
+    if ((wParam == KEYD) && (key_tab[6] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ d", "temp", MB_OK);
+      key_tab[6] = true;
+    }
+    if ((wParam == KEYS) && (key_tab[7] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ s", "temp", MB_OK);
+      key_tab[7] = true;
+    }
+    if ((wParam == KEYENTER) && (key_tab[8] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ enter, w przysz³oœci uruchomi³byœ grê", "temp", MB_OK);
+      key_tab[8] = true;
+    }
+    if ((wParam == KEYESCAPE) && (key_tab[9] == false))
+    {
+      MessageBox(nullptr, "Nacisn¹³eœ escape, zatrzyma³byœ grê, gdyby dzia³a³a", "temp", MB_OK);
+      key_tab[9] = true;
+    }
+
+    return TRUE;
+  }
+  case WM_KEYUP:
+  {
+    if ((wParam == KEYLEFT) && (key_tab[0] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ strza³kê w lewo", "temp", MB_OK);
+      key_tab[0] = false;
+    }
+    if ((wParam == KEYUP) && (key_tab[1] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ strza³kê w górê", "temp", MB_OK);
+      key_tab[1] = false;
+    }
+    if ((wParam == KEYRIGHT) && (key_tab[2] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ strza³kê w prawo", "temp", MB_OK);
+      key_tab[2] = false;
+    }
+    if ((wParam == KEYDOWN) && (key_tab[3] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ strza³kê w dó³", "temp", MB_OK);
+      key_tab[3] = false;
+    }
+    if ((wParam == KEYA) && (key_tab[4] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ a", "temp", MB_OK);
+      key_tab[4] = false;
+    }
+    if ((wParam == KEYW) && (key_tab[5] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ w", "temp", MB_OK);
+      key_tab[5] = false;
+    }
+    if ((wParam == KEYD) && (key_tab[6] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ d", "temp", MB_OK);
+      key_tab[6] = false;
+    }
+    if ((wParam == KEYS) && (key_tab[7] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ s", "temp", MB_OK);
+      key_tab[7] = false;
+    }
+    if ((wParam == KEYENTER) && (key_tab[8] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ enter, cokolwiek", "temp", MB_OK);
+      key_tab[8] = false;
+    }
+    if ((wParam == KEYESCAPE) && (key_tab[9] == true))
+    {
+      MessageBox(nullptr, "Puœci³eœ escape", "temp", MB_OK);
+      key_tab[9] = false;
+    }
+    return TRUE;
+  }
   case WM_INITDIALOG:
   {
     hBitmapBoard = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP_BOARD));
@@ -131,7 +257,7 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
   return FALSE;
 }
 
-INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)//Funkcja obs³ugi komunikatów
+INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
   HWND hwndPlayerview = GetDlgItem(hwndDlg, IDD_PLAYERVIEW);
 
@@ -144,7 +270,7 @@ INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
     switch (HIWORD(wParam))
     {
 
-    case BN_CLICKED://Zdarzenie klikniêcia 
+    case BN_CLICKED:
       switch (LOWORD(wParam))
       {
       case IDC_BUTTON_PLAYER_SINGLE:
@@ -153,6 +279,7 @@ INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
           HWND hwndGameWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), hwndPlayerview, DialogGame);
           ShowWindow(hwndGameWindow, SW_SHOW);
+          MessageBox(hwndGameWindow, "Enter rozpoczyna grê", " ", MB_OK);
           is_game_on = true;
         }
         return TRUE;
@@ -172,7 +299,7 @@ INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
         is_player_window_open = false;
       {
         EndDialog(hwndDlg, 0);
-        DestroyWindow(hwndDlg); // zniszczenie okna
+        DestroyWindow(hwndDlg); 
         return TRUE;
       }
       default:;
@@ -197,7 +324,7 @@ INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
   {
     is_player_window_open = false;
     EndDialog(hwndDlg, 0);
-    DestroyWindow(hwndDlg); // zniszczenie okna
+    DestroyWindow(hwndDlg); 
   }
   return TRUE;
   default:;
@@ -218,7 +345,7 @@ INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
     switch (HIWORD(wParam))
     {
 
-    case BN_CLICKED://Zdarzenie klikniêcia 
+    case BN_CLICKED:
       switch (LOWORD(wParam))
       {
       case IDC_BUTTON_NEW_GAME:
@@ -242,7 +369,7 @@ INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
       }
       case IDC_BUTTON_END_GAME:
       {
-        DestroyWindow(hwndMainview); // zniszczenie okna
+        DestroyWindow(hwndMainview); 
         PostQuitMessage(0);
         return TRUE;
       }
@@ -266,8 +393,8 @@ INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
   }
   case WM_CLOSE:
   {
-    DestroyWindow(hwndMainview); // zniszczenie okna
-    PostQuitMessage(0); //Komunikat polecenia zakoñczenia aplikacji
+    DestroyWindow(hwndMainview); 
+    PostQuitMessage(0); 
   }
   return TRUE;
   default:;
@@ -287,7 +414,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 
 
   MSG msg = {};
-  while (GetMessage(&msg, NULL, 0, 0))
+  while (GetMessage(&msg, nullptr, 0, 0))
   {
     TranslateMessage(&msg);
     DispatchMessage(&msg);
@@ -301,7 +428,7 @@ void DrawMenu(HDC x)
   HDC hDCBitmap;
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapMenu);
-  BitBlt(x, 0, 0, 280, 220, hDCBitmap, 0, 0, SRCCOPY); //szerokosc,wysokosc
+  BitBlt(x, 0, 0, 280, 220, hDCBitmap, 0, 0, SRCCOPY); //width, height
   DeleteDC(hDCBitmap);
 }
 
@@ -310,7 +437,7 @@ void DrawMenuPlayer(HDC x)
   HDC hDCBitmap;
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapMenuPlayer);
-  BitBlt(x, 0, 0, 280, 180, hDCBitmap, 0, 0, SRCCOPY); //szerokosc,wysokosc
+  BitBlt(x, 0, 0, 280, 180, hDCBitmap, 0, 0, SRCCOPY); //width, height
   DeleteDC(hDCBitmap);
   
 }
@@ -320,7 +447,7 @@ void DrawGameBoard(HDC x)
   HDC hDCBitmap;
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapBoard);
-  BitBlt(x, 0, 0, 1250, 600, hDCBitmap, 0, 0, SRCCOPY); //szerokosc,wysokosc
+  BitBlt(x, 0, 0, 1250, 600, hDCBitmap, 0, 0, SRCCOPY); //width, height
   DeleteDC(hDCBitmap);  
 }
 
@@ -329,6 +456,6 @@ void DrawGameControls(HDC x)
   HDC hDCBitmap;
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapControls);
-  BitBlt(x, 0, 0, 288, 162, hDCBitmap, 0, 0, SRCCOPY); //szerokosc,wysokosc
+  BitBlt(x, 0, 0, 288, 162, hDCBitmap, 0, 0, SRCCOPY); //width, height
   DeleteDC(hDCBitmap);
 }
