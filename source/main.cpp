@@ -23,6 +23,7 @@ HBITMAP hBitmapMenu;
 HBITMAP hBitmapMenuPlayer;
 HBITMAP hBitmapBoard;
 HBITMAP hBitmapControls;
+HBITMAP hBitmapPlayer;
 HINSTANCE hInst;
 bool is_game_on = false;
 bool is_controls_window_open = false;
@@ -33,6 +34,7 @@ void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
 void DrawGameBoard(HDC x);
 void DrawGameControls(HDC x);
+void DrawPlayer(HDC hdc,int x,int y);
 
 
 INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -168,6 +170,7 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
     }
     if ((wParam == KEYENTER) && (key_tab[8] == false))
     {
+      DrawPlayer(GetDC(hwndDlg),STARTX,STARTYMIN);
       MessageBox(nullptr, "Nacisn¹³eœ enter, w przysz³oœci uruchomi³byœ grê", "temp", MB_OK);
       key_tab[8] = true;
     }
@@ -236,6 +239,7 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
   case WM_INITDIALOG:
   {
     hBitmapBoard = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP_BOARD));
+    hBitmapPlayer = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_TEST_PLAYER));
   }
   return TRUE;
   case WM_PAINT:
@@ -457,5 +461,13 @@ void DrawGameControls(HDC x)
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapControls);
   BitBlt(x, 0, 0, 288, 162, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);
+}
+void DrawPlayer(HDC hdc, int x, int y)
+{
+  HDC hDCBitmap;
+  hDCBitmap = CreateCompatibleDC(hdc);
+  SelectObject(hDCBitmap, hBitmapPlayer);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
   DeleteDC(hDCBitmap);
 }
