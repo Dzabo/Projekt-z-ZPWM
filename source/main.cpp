@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include "res.h"
 #include <stdio.h>
+#include "player.h"
 
 
 #define KEYLEFT 0x25
@@ -23,18 +24,24 @@ HBITMAP hBitmapMenu;
 HBITMAP hBitmapMenuPlayer;
 HBITMAP hBitmapBoard;
 HBITMAP hBitmapControls;
-HBITMAP hBitmapPlayer;
+HBITMAP hBitmapPlayer1;
+HBITMAP hBitmapPlayer2;
 HINSTANCE hInst;
 bool is_game_on = false;
 bool is_controls_window_open = false;
 bool is_player_window_open = false;
+bool is_multiplayer = false;
 bool key_tab[10] = { false }; //0-3 arrows 4-7 wsad 8-9 enter escape to start and pause game
+Player* player_one = new Player(STARTX, (STARTYMIN + 10));
+Player* player_two = new Player(STARTX, (STARTYMAX - 10));
 
 void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
 void DrawGameBoard(HDC x);
 void DrawGameControls(HDC x);
-void DrawPlayer(HDC hdc,int x,int y);
+void DrawPlayer1(HDC hdc, int x, int y);
+void DrawPlayer2(HDC hdc, int x, int y);
+void DrawPlayers(HDC hdc);
 
 
 INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -130,48 +137,75 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
   {
     if ((wParam == KEYLEFT) && (key_tab[0] == false))
     {
-      MessageBox(nullptr, "Nacisnales strzalke w lewo", "temp", MB_OK);
       key_tab[0] = true;
+      //while (key_tab[0] == true)
+      //{
+        DrawGameBoard(GetDC(hwndDlg));
+        player_one->move_left();
+        DrawPlayers(GetDC(hwndDlg));
+      //}
     }
     if ((wParam == KEYUP) && (key_tab[1] == false))
     {
-      MessageBox(nullptr, "Nacisnales strzalke w góre", "temp", MB_OK);
       key_tab[1] = true;
+      //while (key_tab[1] == true)
+      //{
+        DrawGameBoard(GetDC(hwndDlg));
+        player_one->move_up();
+        DrawPlayers(GetDC(hwndDlg));
+      //}
     }
     if ((wParam == KEYRIGHT) && (key_tab[2] == false))
     {
-      MessageBox(nullptr, "Nacisnales strzalke w prawo", "temp", MB_OK);
       key_tab[2] = true;
+      //while (key_tab[2] == true)
+      //{
+        DrawGameBoard(GetDC(hwndDlg));
+        player_one->move_right();
+        DrawPlayers(GetDC(hwndDlg));
+      //}
     }
     if ((wParam == KEYDOWN) && (key_tab[3] == false))
     {
-      MessageBox(nullptr, "Nacisnales strzalke w dó3", "temp", MB_OK);
       key_tab[3] = true;
+      //while (key_tab[3] == true)
+      //{
+        DrawGameBoard(GetDC(hwndDlg));
+        player_one->move_down();
+        DrawPlayers(GetDC(hwndDlg));
+      //}
     }
-    if ((wParam == KEYA) && (key_tab[4] == false))
+    if ((wParam == KEYA) && (key_tab[4] == false) && (is_multiplayer == true))
     {
-      MessageBox(nullptr, "Nacisnales a", "temp", MB_OK);
       key_tab[4] = true;
+      DrawGameBoard(GetDC(hwndDlg));
+      player_two->move_left();
+      DrawPlayers(GetDC(hwndDlg));
     }
-    if ((wParam == KEYW) && (key_tab[5] == false))
+    if ((wParam == KEYW) && (key_tab[5] == false) && (is_multiplayer == true))
     {
-      MessageBox(nullptr, "Nacisnales w", "temp", MB_OK);
       key_tab[5] = true;
+      DrawGameBoard(GetDC(hwndDlg));
+      player_two->move_up();
+      DrawPlayers(GetDC(hwndDlg));
     }
-    if ((wParam == KEYD) && (key_tab[6] == false))
+    if ((wParam == KEYD) && (key_tab[6] == false) && (is_multiplayer == true))
     {
-      MessageBox(nullptr, "Nacisnales d", "temp", MB_OK);
       key_tab[6] = true;
+      DrawGameBoard(GetDC(hwndDlg));
+      player_two->move_right();
+      DrawPlayers(GetDC(hwndDlg));
     }
-    if ((wParam == KEYS) && (key_tab[7] == false))
+    if ((wParam == KEYS) && (key_tab[7] == false) && (is_multiplayer == true))
     {
-      MessageBox(nullptr, "Nacisnales s", "temp", MB_OK);
       key_tab[7] = true;
+      DrawGameBoard(GetDC(hwndDlg));
+      player_two->move_down();
+      DrawPlayers(GetDC(hwndDlg));
     }
     if ((wParam == KEYENTER) && (key_tab[8] == false))
     {
-      DrawPlayer(GetDC(hwndDlg),STARTX,STARTYMIN);
-      MessageBox(nullptr, "Nacisnales enter, w przyszlosci uruchomilbys gre", "temp", MB_OK);
+      DrawPlayers(GetDC(hwndDlg));
       key_tab[8] = true;
     }
     if ((wParam == KEYESCAPE) && (key_tab[9] == false))
@@ -186,47 +220,38 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
   {
     if ((wParam == KEYLEFT) && (key_tab[0] == true))
     {
-      MessageBox(nullptr, "Pusciles strza3ke w lewo", "temp", MB_OK);
       key_tab[0] = false;
     }
     if ((wParam == KEYUP) && (key_tab[1] == true))
     {
-      MessageBox(nullptr, "Pusciles strzalke  w góre", "temp", MB_OK);
       key_tab[1] = false;
     }
     if ((wParam == KEYRIGHT) && (key_tab[2] == true))
     {
-      MessageBox(nullptr, "Pusciles strzalke  w prawo", "temp", MB_OK);
       key_tab[2] = false;
     }
     if ((wParam == KEYDOWN) && (key_tab[3] == true))
     {
-      MessageBox(nullptr, "Pusciles strzalke  w dó3", "temp", MB_OK);
       key_tab[3] = false;
     }
     if ((wParam == KEYA) && (key_tab[4] == true))
     {
-      MessageBox(nullptr, "Pusciles a", "temp", MB_OK);
       key_tab[4] = false;
     }
     if ((wParam == KEYW) && (key_tab[5] == true))
     {
-      MessageBox(nullptr, "Pusciles w", "temp", MB_OK);
       key_tab[5] = false;
     }
     if ((wParam == KEYD) && (key_tab[6] == true))
     {
-      MessageBox(nullptr, "Pusciles d", "temp", MB_OK);
       key_tab[6] = false;
     }
     if ((wParam == KEYS) && (key_tab[7] == true))
     {
-      MessageBox(nullptr, "Pusciles s", "temp", MB_OK);
       key_tab[7] = false;
     }
     if ((wParam == KEYENTER) && (key_tab[8] == true))
     {
-      MessageBox(nullptr, "Pusciles enter, cokolwiek", "temp", MB_OK);
       key_tab[8] = false;
     }
     if ((wParam == KEYESCAPE) && (key_tab[9] == true))
@@ -239,7 +264,8 @@ INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPara
   case WM_INITDIALOG:
   {
     hBitmapBoard = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP_BOARD));
-    hBitmapPlayer = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_TEST_PLAYER));
+    hBitmapPlayer1 = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_PLAYER1));
+    hBitmapPlayer2 = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_PLAYER2));
   }
   return TRUE;
   case WM_PAINT:
@@ -285,6 +311,7 @@ INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
           ShowWindow(hwndGameWindow, SW_SHOW);
           MessageBox(hwndGameWindow, "Enter rozpoczyna gre", " ", MB_OK);
           is_game_on = true;
+          is_multiplayer = false;
         }
         return TRUE;
       }
@@ -295,7 +322,9 @@ INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lPa
         {
           HWND hwndGameWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), hwndPlayerview, DialogGame);
           ShowWindow(hwndGameWindow, SW_SHOW);
+          MessageBox(hwndGameWindow, "Enter rozpoczyna gre", " ", MB_OK);
           is_game_on = true;
+          is_multiplayer = true;
         }
         return TRUE;
       }
@@ -463,11 +492,34 @@ void DrawGameControls(HDC x)
   BitBlt(x, 0, 0, 288, 162, hDCBitmap, 0, 0, SRCCOPY); //width, height
   DeleteDC(hDCBitmap);
 }
-void DrawPlayer(HDC hdc, int x, int y)
+void DrawPlayer1(HDC hdc, int x, int y)
 {
   HDC hDCBitmap;
   hDCBitmap = CreateCompatibleDC(hdc);
-  SelectObject(hDCBitmap, hBitmapPlayer);
+  SelectObject(hDCBitmap, hBitmapPlayer1);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
   DeleteDC(hDCBitmap);
+}
+
+void DrawPlayer2(HDC hdc, int x, int y)
+{
+  HDC hDCBitmap;
+  hDCBitmap = CreateCompatibleDC(hdc);
+  SelectObject(hDCBitmap, hBitmapPlayer2);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);
+}
+
+void DrawPlayers(HDC hdc)
+{
+  if (is_multiplayer == false)
+  {
+    DrawPlayer1(hdc, player_one->return_position_x(), player_one->return_position_y());
+  }
+  else
+  {
+    DrawPlayer1(hdc, player_one->return_position_x(), player_one->return_position_y());
+    DrawPlayer2(hdc, player_two->return_position_x(), player_two->return_position_y());
+  }
+  
 }

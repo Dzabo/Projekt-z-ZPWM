@@ -133,10 +133,14 @@
     <ClInclude Include="..\source\res.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\resource\bitmap1.bmp" />
     <Image Include="..\resource\Board.bmp" />
     <Image Include="..\resource\Controls.bmp" />
     <Image Include="..\resource\Menu.bmp" />
     <Image Include="..\resource\MenuPlayer.bmp" />
+    <Image Include="..\resource\Player.bmp" />
+    <Image Include="..\resource\Player1.bmp" />
+    <Image Include="..\resource\Player2.bmp" />
     <Image Include="..\resource\rock29x29.bmp" />
     <Image Include="..\source\icon1.ico" />
     <Image Include="..\source\resource\Board.bmp" />

@@ -2,11 +2,11 @@
 
 
 
-npc::npc()
+Npc::Npc()
 {
 }
 
 
-npc::~npc()
+Npc::~Npc()
 {
 }

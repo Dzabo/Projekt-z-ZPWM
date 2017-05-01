@@ -2,11 +2,11 @@
 
 
 
-game::game()
+Game::Game()
 {
 }
 
 
-game::~game()
+Game::~Game()
 {
 }

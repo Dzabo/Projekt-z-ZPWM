@@ -2,11 +2,11 @@
 
 
 
-map::map()
+Map::Map()
 {
 }
 
 
-map::~map()
+Map::~Map()
 {
 }

@@ -1,8 +1,10 @@
-#pragma once
-class game
+#ifndef ZPWM_GAME_H_
+#define ZPWM_GAME_H_
+class Game
 {
 public:
-  game();
-  ~game();
+  Game();
+  ~Game();
 };
 
+#endif

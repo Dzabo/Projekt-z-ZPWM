@@ -87,5 +87,17 @@
     <Image Include="..\resource\rock29x29.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\resource\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
