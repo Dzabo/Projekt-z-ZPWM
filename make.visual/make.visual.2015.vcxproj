@@ -126,6 +126,8 @@
     <ResourceCompile Include="..\source\res.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\dialogs.h" />
+    <ClInclude Include="..\source\functions.h" />
     <ClInclude Include="..\source\game.h" />
     <ClInclude Include="..\source\map.h" />
     <ClInclude Include="..\source\npc.h" />
@@ -140,7 +142,15 @@
     <Image Include="..\resource\MenuPlayer.bmp" />
     <Image Include="..\resource\Player.bmp" />
     <Image Include="..\resource\Player1.bmp" />
+    <Image Include="..\resource\Player1e.bmp" />
+    <Image Include="..\resource\Player1n.bmp" />
+    <Image Include="..\resource\Player1s.bmp" />
+    <Image Include="..\resource\Player1w.bmp" />
     <Image Include="..\resource\Player2.bmp" />
+    <Image Include="..\resource\Player2e.bmp" />
+    <Image Include="..\resource\Player2n.bmp" />
+    <Image Include="..\resource\Player2s.bmp" />
+    <Image Include="..\resource\Player2w.bmp" />
     <Image Include="..\resource\rock29x29.bmp" />
     <Image Include="..\source\icon1.ico" />
     <Image Include="..\source\resource\Board.bmp" />

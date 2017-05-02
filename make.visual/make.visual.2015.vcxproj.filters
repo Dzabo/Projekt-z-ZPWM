@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Player_Models">
+      <UniqueIdentifier>{bc90323a-f4ee-4f7f-97a5-8e922be9ce33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Background_Models">
+      <UniqueIdentifier>{21f7fa58-c7a5-4eec-a2fa-eba5cfb16c62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Map_Models">
+      <UniqueIdentifier>{69efcea1-932a-4d0f-82ce-eb9448e5f849}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main.cpp">
@@ -52,52 +61,82 @@
     <ClInclude Include="..\source\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\dialogs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\source\icon1.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="G:\OWIECZKA\resource\Menu.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\source\resource\Board.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="resource\Menu.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\source\resource\MenuPlayer.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\source\resource\Controls.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\resource\Board.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\resource\Menu.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\resource\MenuPlayer.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\resource\Controls.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\resource\rock29x29.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="..\resource\bitmap1.bmp">
-      <Filter>Resource Files</Filter>
+    <Image Include="..\resource\Player2w.bmp">
+      <Filter>Resource Files\Player_Models</Filter>
     </Image>
     <Image Include="..\resource\Player.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Player_Models</Filter>
     </Image>
     <Image Include="..\resource\Player1.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Player_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Player1e.bmp">
+      <Filter>Resource Files\Player_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Player1n.bmp">
+      <Filter>Resource Files\Player_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Player1s.bmp">
+      <Filter>Resource Files\Player_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Player1w.bmp">
+      <Filter>Resource Files\Player_Models</Filter>
     </Image>
     <Image Include="..\resource\Player2.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Player_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Player2e.bmp">
+      <Filter>Resource Files\Player_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Player2n.bmp">
+      <Filter>Resource Files\Player_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Player2s.bmp">
+      <Filter>Resource Files\Player_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Controls.bmp">
+      <Filter>Resource Files\Background_Models</Filter>
+    </Image>
+    <Image Include="..\source\resource\Controls.bmp">
+      <Filter>Resource Files\Background_Models</Filter>
+    </Image>
+    <Image Include="G:\OWIECZKA\resource\Menu.bmp">
+      <Filter>Resource Files\Background_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Menu.bmp">
+      <Filter>Resource Files\Background_Models</Filter>
+    </Image>
+    <Image Include="resource\Menu.bmp">
+      <Filter>Resource Files\Background_Models</Filter>
+    </Image>
+    <Image Include="..\resource\MenuPlayer.bmp">
+      <Filter>Resource Files\Background_Models</Filter>
+    </Image>
+    <Image Include="..\source\resource\MenuPlayer.bmp">
+      <Filter>Resource Files\Background_Models</Filter>
+    </Image>
+    <Image Include="..\resource\rock29x29.bmp">
+      <Filter>Resource Files\Map_Models</Filter>
+    </Image>
+    <Image Include="..\resource\bitmap1.bmp">
+      <Filter>Resource Files\Map_Models</Filter>
+    </Image>
+    <Image Include="..\resource\Board.bmp">
+      <Filter>Resource Files\Map_Models</Filter>
+    </Image>
+    <Image Include="..\source\resource\Board.bmp">
+      <Filter>Resource Files\Map_Models</Filter>
+    </Image>
+    <Image Include="..\source\icon1.ico">
+      <Filter>Resource Files\Map_Models</Filter>
     </Image>
   </ItemGroup>
 </Project>

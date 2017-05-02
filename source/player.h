@@ -6,6 +6,7 @@ private:
   int position_x_;
   int position_y_;
   double velocity_;
+  double speed_multiplier_;
 public:
   Player(int x,int y);
   ~Player();
@@ -15,6 +16,8 @@ public:
   void move_right();
   void move_left();
   void move_down();
+  bool is_on_route()const;
+  
 
 };
 
