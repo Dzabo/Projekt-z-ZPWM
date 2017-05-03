@@ -44,6 +44,14 @@ bool key_tab[10] = { false }; //0-3 arrows 4-7 wsad 8-9 enter escape to start an
 Player* player_one;
 Player* player_two;
 
+enum direction
+{
+  north,
+  east,
+  south,
+  west
+};
+
 /*void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
 void DrawGameBoard(HDC x);
@@ -188,16 +196,69 @@ inline void DrawPlayer2W(HDC hdc, int x, int y)
   DeleteDC(hDCBitmap);
 }
 
-inline void DrawPlayers(HDC hdc)
+inline void DrawPlayers(HDC hdc, direction dir_variable1, direction dir_variable2)
 {
   if (is_multiplayer == false)
   {
-    DrawPlayer1(hdc, player_one->return_position_x(), player_one->return_position_y());
+    switch(dir_variable1)
+    {
+    case north:
+      DrawPlayer1N(hdc, player_one->return_position_x(), player_one->return_position_y());
+      break;
+    case east:
+      DrawPlayer1E(hdc, player_one->return_position_x(), player_one->return_position_y());
+      break;
+    case south:
+      DrawPlayer1S(hdc, player_one->return_position_x(), player_one->return_position_y());
+      break;
+    case west:
+      DrawPlayer1W(hdc, player_one->return_position_x(), player_one->return_position_y());
+      break;
+    }
+//    DrawPlayer1(hdc, player_one->return_position_x(), player_one->return_position_y());
   }
   else
   {
-    DrawPlayer1(hdc, player_one->return_position_x(), player_one->return_position_y());
-    DrawPlayer2(hdc, player_two->return_position_x(), player_two->return_position_y());
+    switch (dir_variable1)
+    {
+    case north:
+      DrawPlayer1N(hdc, player_one->return_position_x(), player_one->return_position_y());
+      //DrawPlayer2N(hdc, player_two->return_position_x(), player_two->return_position_y());
+      break;
+    case east:
+      DrawPlayer1E(hdc, player_one->return_position_x(), player_one->return_position_y());
+      //DrawPlayer2E(hdc, player_two->return_position_x(), player_two->return_position_y());
+      break;
+    case south:
+      DrawPlayer1S(hdc, player_one->return_position_x(), player_one->return_position_y());
+      //DrawPlayer2S(hdc, player_two->return_position_x(), player_two->return_position_y());
+      break;
+    case west:
+      DrawPlayer1W(hdc, player_one->return_position_x(), player_one->return_position_y());
+      //DrawPlayer2W(hdc, player_two->return_position_x(), player_two->return_position_y());
+      break;
+    }
+    switch (dir_variable2)
+    {
+    case north:
+      //DrawPlayer1N(hdc, player_one->return_position_x(), player_one->return_position_y());
+      DrawPlayer2N(hdc, player_two->return_position_x(), player_two->return_position_y());
+      break;
+    case east:
+      //DrawPlayer1E(hdc, player_one->return_position_x(), player_one->return_position_y());
+      DrawPlayer2E(hdc, player_two->return_position_x(), player_two->return_position_y());
+      break;
+    case south:
+      //DrawPlayer1S(hdc, player_one->return_position_x(), player_one->return_position_y());
+      DrawPlayer2S(hdc, player_two->return_position_x(), player_two->return_position_y());
+      break;
+    case west:
+      //DrawPlayer1W(hdc, player_one->return_position_x(), player_one->return_position_y());
+      DrawPlayer2W(hdc, player_two->return_position_x(), player_two->return_position_y());
+      break;
+    }
+//    DrawPlayer1(hdc, player_one->return_position_x(), player_one->return_position_y());
+//    DrawPlayer2(hdc, player_two->return_position_x(), player_two->return_position_y());
   }
 
 }
