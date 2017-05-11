@@ -35,12 +35,28 @@ HBITMAP hBitmapPlayer2E;
 HBITMAP hBitmapPlayer2S;
 HBITMAP hBitmapPlayer2W;
 
+bool check1_ = false,
+check2_ = false,
+check3_ = false,
+check4_ = false,
+check5_ = false,
+check6_ = false,
+check7_ = false,
+check8_ = false,
+check9_ = false,
+check10_ = false;
+
+
+
+
 HINSTANCE hInst;
 bool is_game_on = false;
+bool is_game_active = false;
 bool is_controls_window_open = false;
 bool is_player_window_open = false;
 bool is_multiplayer = false;
 bool key_tab[10] = { false }; //0-3 arrows 4-7 wsad 8-9 enter escape to start and pause game
+void check_result(Player* player, HWND hwndDlg,int player_id);
 Player* player_one;
 Player* player_two;
 
@@ -263,4 +279,28 @@ inline void DrawPlayers(HDC hdc, direction dir_variable1, direction dir_variable
 
 }
 //
+inline void check_result(Player* player,HWND hwndDlg,int player_id)
+{
+
+  if ((player->return_position_x() > 800) && (player->return_position_y() < 500) && (player->return_position_y() > 350)) { check1_ = true; }
+  if ((player->return_position_x() > 1050) && (player->return_position_y() < 350) && (player->return_position_y() > 250) && (check1_ == true)) { check2_ = true; }
+  if ((player->return_position_x() < 1050) && (player->return_position_y() < 180) && (player->return_position_y() > 80) && (check2_ == true)) { check3_ = true; }
+  if ((player->return_position_x() < 920) && (player->return_position_y() < 200) && (player->return_position_y() > 110) && (check3_ == true)) { check4_ = true; }
+  if ((player->return_position_x() < 600) && (player->return_position_y() < 175) && (player->return_position_y() > 50) && (check4_ == true)) { check5_ = true; }
+  if ((player->return_position_x() < 400) && (player->return_position_y() < 250) && (player->return_position_y() > 100) && (check5_ == true)) { check6_ = true; }
+  if ((player->return_position_x() < 220) && (player->return_position_y() > 150) && (check6_ == true)) { check7_ = true; }
+  if ((player->return_position_x() < 220) && (player->return_position_y() > 400) && (check7_ == true)) { check8_ = true; }
+  if ((player->return_position_x() > 350) && (player->return_position_y() < 510) && (player->return_position_y() > 390) && (check8_ == true)) { check9_ = true; }
+  if ((player->return_position_x() > 580) && (player->return_position_y() < 410) && (player->return_position_y() > 270) && (check9_ == true)) { check10_ = true; }
+  if ((check10_ == true)&&(player_id==1))
+  {
+    is_game_active = false;
+    MessageBox(GetDlgItem(hwndDlg, IDD_GAMEVIEW), "Wygra³ zawodnik nr 1", " ", MB_OK);
+  }
+  else if ((check10_ == true) && (player_id == 2))
+  {
+    is_game_active = false;
+    MessageBox(GetDlgItem(hwndDlg, IDD_GAMEVIEW), "Wygra³ zawodnik nr 1", " ", MB_OK);
+  }
+}
 #endif

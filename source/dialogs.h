@@ -1,8 +1,9 @@
 #ifndef ZPWM_DIALOGS_H_
 #define ZPWM_DIALOGS_H_
-
+#include"functions.h"
 direction dir_variable1;
 direction dir_variable2;
+//bool is_game_active = false;
 
 inline INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -95,7 +96,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
   return TRUE;
   case WM_KEYDOWN:
   {
-    if ((wParam == KEYLEFT) && (key_tab[0] == false))
+    if ((wParam == KEYLEFT) && (key_tab[0] == false)&&(is_game_active == true))
     {
       key_tab[0] = true;
       dir_variable1 = west;
@@ -104,9 +105,11 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_one->move_left();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
+      check_result(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
+
       //}
     }
-    if ((wParam == KEYUP) && (key_tab[1] == false))
+    if ((wParam == KEYUP) && (key_tab[1] == false) && (is_game_active == true))
     {
       key_tab[1] = true;
       dir_variable1 = north;
@@ -115,9 +118,10 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_one->move_up();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
+      check_result(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW),1);
       //}
     }
-    if ((wParam == KEYRIGHT) && (key_tab[2] == false))
+    if ((wParam == KEYRIGHT) && (key_tab[2] == false) && (is_game_active == true))
     {
       key_tab[2] = true;
       dir_variable1 = east;
@@ -126,9 +130,10 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_one->move_right();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
+      check_result(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
       //}
     }
-    if ((wParam == KEYDOWN) && (key_tab[3] == false))
+    if ((wParam == KEYDOWN) && (key_tab[3] == false) && (is_game_active == true))
     {
       key_tab[3] = true;
       dir_variable1 = south;
@@ -137,44 +142,50 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_one->move_down();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
+      check_result(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
       //}
     }
-    if ((wParam == KEYA) && (key_tab[4] == false) && (is_multiplayer == true))
+    if ((wParam == KEYA) && (key_tab[4] == false) && (is_multiplayer == true) && (is_game_active == true))
     {
       key_tab[4] = true;
       dir_variable2 = west;
       DrawGameBoard(GetDC(hwndDlg));
       player_two->move_left();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
+      check_result(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
     }
-    if ((wParam == KEYW) && (key_tab[5] == false) && (is_multiplayer == true))
+    if ((wParam == KEYW) && (key_tab[5] == false) && (is_multiplayer == true) && (is_game_active == true))
     {
       key_tab[5] = true;
       dir_variable2 = north;
       DrawGameBoard(GetDC(hwndDlg));
       player_two->move_up();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
+      check_result(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
     }
-    if ((wParam == KEYD) && (key_tab[6] == false) && (is_multiplayer == true))
+    if ((wParam == KEYD) && (key_tab[6] == false) && (is_multiplayer == true) && (is_game_active == true))
     {
       key_tab[6] = true;
       dir_variable2 = east;
       DrawGameBoard(GetDC(hwndDlg));
       player_two->move_right();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
+      check_result(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
     }
-    if ((wParam == KEYS) && (key_tab[7] == false) && (is_multiplayer == true))
+    if ((wParam == KEYS) && (key_tab[7] == false) && (is_multiplayer == true) && (is_game_active == true))
     {
       key_tab[7] = true;
       dir_variable2 = south;
       DrawGameBoard(GetDC(hwndDlg));
       player_two->move_down();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
+      check_result(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
     }
     if ((wParam == KEYENTER) && (key_tab[8] == false))
     {
-      player_one = new Player(STARTX, (STARTYMIN + 10));
-      player_two = new Player(STARTX, (STARTYMAX - 10));
+      player_one = new Player(STARTX, (STARTYMIN + 10),1);
+      player_two = new Player(STARTX, (STARTYMAX - 10),2);
+      is_game_active = true;
       DrawPlayers(GetDC(hwndDlg), east,east);
       key_tab[8] = true;
     }
