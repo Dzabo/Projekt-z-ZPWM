@@ -105,7 +105,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_one->move_left();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
-      check_result(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
+      checkresult(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
 
       //}
     }
@@ -118,7 +118,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_one->move_up();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
-      check_result(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW),1);
+      checkresult(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW),1);
       //}
     }
     if ((wParam == KEYRIGHT) && (key_tab[2] == false) && (is_game_active == true))
@@ -130,7 +130,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_one->move_right();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
-      check_result(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
+      checkresult(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
       //}
     }
     if ((wParam == KEYDOWN) && (key_tab[3] == false) && (is_game_active == true))
@@ -142,7 +142,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_one->move_down();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
-      check_result(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
+      checkresult(player_one, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 1);
       //}
     }
     if ((wParam == KEYA) && (key_tab[4] == false) && (is_multiplayer == true) && (is_game_active == true))
@@ -152,7 +152,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_two->move_left();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
-      check_result(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
+      checkresult(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
     }
     if ((wParam == KEYW) && (key_tab[5] == false) && (is_multiplayer == true) && (is_game_active == true))
     {
@@ -161,7 +161,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_two->move_up();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
-      check_result(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
+      checkresult(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
     }
     if ((wParam == KEYD) && (key_tab[6] == false) && (is_multiplayer == true) && (is_game_active == true))
     {
@@ -170,7 +170,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_two->move_right();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
-      check_result(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
+      checkresult(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
     }
     if ((wParam == KEYS) && (key_tab[7] == false) && (is_multiplayer == true) && (is_game_active == true))
     {
@@ -179,10 +179,11 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       DrawGameBoard(GetDC(hwndDlg));
       player_two->move_down();
       DrawPlayers(GetDC(hwndDlg), dir_variable1, dir_variable2);
-      check_result(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
+      checkresult(player_two, GetDlgItem(hwndDlg, IDD_GAMEVIEW), 2);
     }
     if ((wParam == KEYENTER) && (key_tab[8] == false))
     {
+      clearcheckpoints();
       player_one = new Player(STARTX, (STARTYMIN + 10),1);
       player_two = new Player(STARTX, (STARTYMAX - 10),2);
       is_game_active = true;

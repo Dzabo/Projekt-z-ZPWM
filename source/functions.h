@@ -56,7 +56,8 @@ bool is_controls_window_open = false;
 bool is_player_window_open = false;
 bool is_multiplayer = false;
 bool key_tab[10] = { false }; //0-3 arrows 4-7 wsad 8-9 enter escape to start and pause game
-void check_result(Player* player, HWND hwndDlg,int player_id);
+void checkresult(Player* player, HWND hwndDlg,int player_id);
+void clearcheckpoints();
 Player* player_one;
 Player* player_two;
 
@@ -279,7 +280,7 @@ inline void DrawPlayers(HDC hdc, direction dir_variable1, direction dir_variable
 
 }
 //
-inline void check_result(Player* player,HWND hwndDlg,int player_id)
+inline void checkresult(Player* player,HWND hwndDlg,int player_id)
 {
 
   if ((player->return_position_x() > 800) && (player->return_position_y() < 500) && (player->return_position_y() > 350)) { check1_ = true; }
@@ -302,5 +303,19 @@ inline void check_result(Player* player,HWND hwndDlg,int player_id)
     is_game_active = false;
     MessageBox(GetDlgItem(hwndDlg, IDD_GAMEVIEW), "Wygra³ zawodnik nr 1", " ", MB_OK);
   }
+}
+
+inline void clearcheckpoints()
+{
+  check1_ = false;
+  check2_ = false;
+  check3_ = false;
+  check4_ = false;
+  check5_ = false;
+  check6_ = false;
+  check7_ = false;
+  check8_ = false;
+  check9_ = false;
+  check10_ = false;
 }
 #endif
