@@ -2,7 +2,7 @@
 
 
 
-Player::Player(int x, int y,int id)
+Player::Player(int x, int y, int id)
 {
   position_x_ = x;
   position_y_ = y;
@@ -75,8 +75,12 @@ void Player::move_down()
   }
 }
 
-bool Player::is_on_route()const
+bool Player::is_on_route()
 {
+  if (position_x_ < 15)position_x_ += 15;
+  if (position_x_ > 1235)position_x_ -= 15;
+  if (position_y_ < 15)position_y_ += 15;
+  if (position_y_ > 585)position_y_ -= 15;
   if (position_x_ < 80 || position_x_>1205 || position_y_ < 31 || position_y_ >550 ||
     (position_x_ > 227 && position_x_ < 356 && position_y_>249 && position_y_ < 385) ||
     (position_y_ > 438 && position_x_ > 521 && position_x_ < 744) ||

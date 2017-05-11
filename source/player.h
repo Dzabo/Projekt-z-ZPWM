@@ -18,7 +18,7 @@ public:
   void move_right();
   void move_left();
   void move_down();
-  bool is_on_route()const;
+  bool is_on_route();
   bool check_result();
   
 

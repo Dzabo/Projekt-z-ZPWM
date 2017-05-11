@@ -1,6 +1,6 @@
 #ifndef ZPWM_DIALOGS_H_
 #define ZPWM_DIALOGS_H_
-#include"functions.h"
+#include "functions.h"
 direction dir_variable1;
 direction dir_variable2;
 //bool is_game_active = false;
