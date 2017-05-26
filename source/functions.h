@@ -34,6 +34,17 @@ HBITMAP hBitmapPlayer2N;
 HBITMAP hBitmapPlayer2E;
 HBITMAP hBitmapPlayer2S;
 HBITMAP hBitmapPlayer2W;
+HBITMAP hbmMaska1N;
+HBITMAP hbmMaska1E;
+HBITMAP hbmMaska1S;
+HBITMAP hbmMaska1W;
+HBITMAP hbmMaska2N;
+HBITMAP hbmMaska2E;
+HBITMAP hbmMaska2S;
+HBITMAP hbmMaska2W;
+HBITMAP hbmOld;
+HDC hDCBitmap;
+
 
 bool check1_ = false,
 check2_ = false,
@@ -60,6 +71,8 @@ void checkresult(Player* player, HWND hwndDlg,int player_id);
 void clearcheckpoints();
 Player* player_one;
 Player* player_two;
+HBITMAP CreateBitmapMask(HBITMAP hbmColour, COLORREF crTransparent);
+
 
 enum direction
 {
@@ -87,9 +100,36 @@ void DrawPlayers(HDC hdc);*/
 
 
 //
+HBITMAP CreateBitmapMask(HBITMAP hbmColour, COLORREF crTransparent)
+{
+  HDC hdcMem, hdcMem2;
+  HBITMAP hbmMask, hbmOld, hbmOld2;
+  BITMAP bm;
+
+  GetObject(hbmColour, sizeof(BITMAP), &bm);
+  hbmMask = CreateBitmap(bm.bmWidth, bm.bmHeight, 1, 1, NULL);
+
+  hdcMem = CreateCompatibleDC(NULL);
+  hdcMem2 = CreateCompatibleDC(NULL);
+
+  hbmOld = static_cast<HBITMAP>(SelectObject(hdcMem, hbmColour));
+  hbmOld2 = static_cast<HBITMAP>(SelectObject(hdcMem2, hbmMask));
+
+  SetBkColor(hdcMem, crTransparent);
+
+  BitBlt(hdcMem2, 0, 0, bm.bmWidth, bm.bmHeight, hdcMem, 0, 0, SRCCOPY);
+  BitBlt(hdcMem, 0, 0, bm.bmWidth, bm.bmHeight, hdcMem2, 0, 0, SRCINVERT);
+
+  SelectObject(hdcMem, hbmOld);
+  SelectObject(hdcMem2, hbmOld2);
+  DeleteDC(hdcMem);
+  DeleteDC(hdcMem2);
+
+  return hbmMask;
+}
 inline void DrawMenu(HDC x)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapMenu);
   BitBlt(x, 0, 0, 280, 220, hDCBitmap, 0, 0, SRCCOPY); //width, height
@@ -98,7 +138,7 @@ inline void DrawMenu(HDC x)
 
 inline void DrawMenuPlayer(HDC x)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapMenuPlayer);
   BitBlt(x, 0, 0, 280, 180, hDCBitmap, 0, 0, SRCCOPY); //width, height
@@ -108,7 +148,7 @@ inline void DrawMenuPlayer(HDC x)
 
 inline void DrawGameBoard(HDC x)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapBoard);
   BitBlt(x, 0, 0, 1250, 600, hDCBitmap, 0, 0, SRCCOPY); //width, height
@@ -117,7 +157,7 @@ inline void DrawGameBoard(HDC x)
 
 inline void DrawGameControls(HDC x)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(x);
   SelectObject(hDCBitmap, hBitmapControls);
   BitBlt(x, 0, 0, 288, 162, hDCBitmap, 0, 0, SRCCOPY); //width, height
@@ -126,7 +166,7 @@ inline void DrawGameControls(HDC x)
 
 inline void DrawPlayer1(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
   SelectObject(hDCBitmap, hBitmapPlayer1);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
@@ -135,43 +175,80 @@ inline void DrawPlayer1(HDC hdc, int x, int y)
 
 inline void DrawPlayer1N(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+  
+  /*SelectObject(hDCBitmap, hBitmapPlayer1N);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height*/
+  hbmMaska1N = CreateBitmapMask(hBitmapPlayer1N, RGB(0, 0, 0));
   hDCBitmap = CreateCompatibleDC(hdc);
+  //GetObject(hBitmapPlayer1N,29,)
+  hbmOld = (HBITMAP)SelectObject(hDCBitmap, hbmMaska1N);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCAND);
   SelectObject(hDCBitmap, hBitmapPlayer1N);
-  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCPAINT);
+
+  SelectObject(hDCBitmap, hbmOld);
   DeleteDC(hDCBitmap);
+  DeleteObject(hbmMaska1N);
 }
 
 inline void DrawPlayer1E(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
-  SelectObject(hDCBitmap, hBitmapPlayer1E);
+  /*SelectObject(hDCBitmap, hBitmapPlayer1E);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);*/
+  hbmMaska1E = CreateBitmapMask(hBitmapPlayer1E, RGB(0, 0, 0));
+  hbmOld = (HBITMAP)SelectObject(hDCBitmap, hbmMaska1E);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCAND);
+  SelectObject(hDCBitmap, hBitmapPlayer1E);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCPAINT);
+
+  SelectObject(hDCBitmap, hbmOld);
   DeleteDC(hDCBitmap);
+  DeleteObject(hbmMaska1E);
 }
 
 inline void DrawPlayer1S(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
+  /*
   SelectObject(hDCBitmap, hBitmapPlayer1S);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);*/
+  hbmMaska1S = CreateBitmapMask(hBitmapPlayer1S, RGB(0, 0, 0));
+  hbmOld = (HBITMAP)SelectObject(hDCBitmap, hbmMaska1S);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCAND);
+  SelectObject(hDCBitmap, hBitmapPlayer1S);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCPAINT);
+
+  SelectObject(hDCBitmap, hbmOld);
   DeleteDC(hDCBitmap);
+  DeleteObject(hbmMaska1S);
 }
 
 inline void DrawPlayer1W(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
-  SelectObject(hDCBitmap, hBitmapPlayer1W);
+  /*SelectObject(hDCBitmap, hBitmapPlayer1W);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);*/
+  hbmMaska1W = CreateBitmapMask(hBitmapPlayer1W, RGB(0, 0, 0));
+  hbmOld = (HBITMAP)SelectObject(hDCBitmap, hbmMaska1W);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCAND);
+  SelectObject(hDCBitmap, hBitmapPlayer1W);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCPAINT);
+
+  SelectObject(hDCBitmap, hbmOld);
   DeleteDC(hDCBitmap);
+  DeleteObject(hbmMaska1W);
 }
 
 inline void DrawPlayer2(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
   SelectObject(hDCBitmap, hBitmapPlayer2);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
@@ -180,37 +257,74 @@ inline void DrawPlayer2(HDC hdc, int x, int y)
 
 inline void DrawPlayer2N(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
-  SelectObject(hDCBitmap, hBitmapPlayer2N);
+  /*SelectObject(hDCBitmap, hBitmapPlayer2N);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);*/
+  hbmMaska2N = CreateBitmapMask(hBitmapPlayer2N, RGB(0, 0, 0));
+  hbmOld = (HBITMAP)SelectObject(hDCBitmap, hbmMaska2N);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCAND);
+  SelectObject(hDCBitmap, hBitmapPlayer2N);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCPAINT);
+
+  SelectObject(hDCBitmap, hbmOld);
   DeleteDC(hDCBitmap);
+  DeleteObject(hbmMaska2N);
 }
 
 inline void DrawPlayer2E(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
-  SelectObject(hDCBitmap, hBitmapPlayer2E);
+  /*SelectObject(hDCBitmap, hBitmapPlayer2E);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);*/
+  hbmMaska2E = CreateBitmapMask(hBitmapPlayer2E, RGB(0, 0, 0));
+  hbmOld = (HBITMAP)SelectObject(hDCBitmap, hbmMaska2E);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCAND);
+  SelectObject(hDCBitmap, hBitmapPlayer2E);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCPAINT);
+
+
+  SelectObject(hDCBitmap, hbmOld);
   DeleteDC(hDCBitmap);
+  DeleteObject(hbmMaska2E);
 }
 inline void DrawPlayer2S(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
-  SelectObject(hDCBitmap, hBitmapPlayer2S);
+  /*SelectObject(hDCBitmap, hBitmapPlayer2S);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);*/
+  hbmMaska2S = CreateBitmapMask(hBitmapPlayer2S, RGB(0, 0, 0));
+  hbmOld = (HBITMAP)SelectObject(hDCBitmap, hbmMaska2S);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCAND);
+  SelectObject(hDCBitmap, hBitmapPlayer2S);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCPAINT);
+
+  SelectObject(hDCBitmap, hbmOld);
   DeleteDC(hDCBitmap);
+  DeleteObject(hbmMaska2S);
 }
 
 inline void DrawPlayer2W(HDC hdc, int x, int y)
 {
-  HDC hDCBitmap;
+
   hDCBitmap = CreateCompatibleDC(hdc);
-  SelectObject(hDCBitmap, hBitmapPlayer2W);
+ /* SelectObject(hDCBitmap, hBitmapPlayer2W);
   BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCCOPY); //width, height
+  DeleteDC(hDCBitmap);*/
+  hbmMaska2W = CreateBitmapMask(hBitmapPlayer2W, RGB(0, 0, 0));
+  hbmOld = (HBITMAP)SelectObject(hDCBitmap, hbmMaska2W);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCAND);
+  SelectObject(hDCBitmap, hBitmapPlayer2W);
+  BitBlt(hdc, x, y, 29, 29, hDCBitmap, 0, 0, SRCPAINT);
+
+  SelectObject(hDCBitmap, hbmOld);
   DeleteDC(hDCBitmap);
+  DeleteObject(hbmMaska2W);
 }
 
 inline void DrawPlayers(HDC hdc, direction dir_variable1, direction dir_variable2)

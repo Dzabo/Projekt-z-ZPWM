@@ -1,8 +1,8 @@
 #ifndef ZPWM_DIALOGS_H_
 #define ZPWM_DIALOGS_H_
 #include "functions.h"
-direction dir_variable1;
-direction dir_variable2;
+direction dir_variable1=north;
+direction dir_variable2=north;
 //bool is_game_active = false;
 
 inline INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)

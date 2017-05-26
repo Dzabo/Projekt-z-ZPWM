@@ -3,8 +3,8 @@
 class Player
 {
 private:
-  int position_x_;
-  int position_y_;
+  int position_x_=-10;
+  int position_y_=-10;
   int id_;
   double velocity_;
   double speed_multiplier_;
