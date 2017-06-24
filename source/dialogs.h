@@ -1,9 +1,11 @@
 #ifndef ZPWM_DIALOGS_H_
 #define ZPWM_DIALOGS_H_
 #include "functions.h"
+#pragma comment(lib, "winmm.lib")
 direction dir_variable1=north;
 direction dir_variable2=north;
 //bool is_game_active = false;
+
 
 inline INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -42,6 +44,7 @@ inline INT_PTR CALLBACK DialogControl(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
   }
   case WM_CLOSE:
   {
+    ButtonSound();
     is_controls_window_open = false;
     EndDialog(hwndDlg, 0);
     DestroyWindow(hwndDlg);
@@ -76,16 +79,6 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       case ID_OGRZE_TUTAJ:
       {
         MessageBox(0, "Super informacje o grze", "O grze", MB_OK);
-        return TRUE;
-      }
-      case ID_ROZGRYWKA_ROZPOCZNIJ:
-      {
-        MessageBox(0, "HEHE JESZCZE NIE TERAZ", " ", MB_OK);
-        return TRUE;
-      }
-      case ID_ROZGRYWKA_ZAKONCZ:
-      {
-        MessageBox(0, "Najpierw trzeba zacz1a hehe", " ", MB_OK);
         return TRUE;
       }
       default:;
@@ -268,6 +261,7 @@ inline INT_PTR CALLBACK DialogGame(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
   case WM_CLOSE:
   {
     is_game_on = false;
+    ButtonSound();
     EndDialog(hwndDlg, 0);
     DestroyWindow(hwndDlg); // zniszczenie okna
   }
@@ -295,12 +289,14 @@ inline  INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
       {
       case IDC_BUTTON_PLAYER_SINGLE:
       {
+        ButtonSound();
         if (is_game_on == false)
         {
           HWND hwndGameWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), hwndPlayerview, DialogGame);
           ShowWindow(hwndGameWindow, SW_SHOW);
           MessageBox(hwndGameWindow, "Enter rozpoczyna gre", " ", MB_OK);
           is_game_on = true;
+          GameSound();
           is_multiplayer = false;
         }
         return TRUE;
@@ -308,17 +304,20 @@ inline  INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
 
       case IDC_BUTTON_PLAYER_MULTI:
       {
+        ButtonSound();
         if (is_game_on == false)
         {
           HWND hwndGameWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_GAMEVIEW), hwndPlayerview, DialogGame);
           ShowWindow(hwndGameWindow, SW_SHOW);
           MessageBox(hwndGameWindow, "Enter rozpoczyna gre", " ", MB_OK);
           is_game_on = true;
+          GameSound();
           is_multiplayer = true;
         }
         return TRUE;
       }
       case IDC_BUTTON_GOBACK:
+        ButtonSound();
         is_player_window_open = false;
         {
           EndDialog(hwndDlg, 0);
@@ -345,6 +344,7 @@ inline  INT_PTR CALLBACK DialogPlayer(HWND hwndDlg, UINT uMsg, WPARAM wParam, LP
   }
   case WM_CLOSE:
   {
+    ButtonSound();
     is_player_window_open = false;
     EndDialog(hwndDlg, 0);
     DestroyWindow(hwndDlg);
@@ -373,6 +373,7 @@ inline INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       {
       case IDC_BUTTON_NEW_GAME:
       {
+        ButtonSound();
         if (is_player_window_open == false) {
           HWND hwndPlayerWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_PLAYERVIEW), NULL, DialogPlayer);
           ShowWindow(hwndPlayerWindow, SW_SHOW);
@@ -382,6 +383,7 @@ inline INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
       }
       case IDC_BUTTON_CONTROL:
       {
+        ButtonSound();
         if (is_controls_window_open == false)
         {
           HWND hwndControlWindow = CreateDialog(NULL, MAKEINTRESOURCE(IDD_CONTROLVIEW), NULL, DialogControl);
@@ -424,5 +426,7 @@ inline INT_PTR CALLBACK DialogMain(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARA
   }
   return FALSE;
 }
+
+
 
 #endif

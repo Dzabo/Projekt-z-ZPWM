@@ -135,9 +135,13 @@
     <ClInclude Include="..\source\res.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\resource\Background_Models\Controls.bmp" />
+    <Image Include="..\resource\Background_Models\Menu.bmp" />
+    <Image Include="..\resource\Background_Models\MenuPlayer.bmp" />
     <Image Include="..\resource\bitmap1.bmp" />
     <Image Include="..\resource\Board.bmp" />
     <Image Include="..\resource\Controls.bmp" />
+    <Image Include="..\resource\Map_Models\Board.bmp" />
     <Image Include="..\resource\Menu.bmp" />
     <Image Include="..\resource\MenuPlayer.bmp" />
     <Image Include="..\resource\Player.bmp" />
@@ -151,6 +155,16 @@
     <Image Include="..\resource\Player2n.bmp" />
     <Image Include="..\resource\Player2s.bmp" />
     <Image Include="..\resource\Player2w.bmp" />
+    <Image Include="..\resource\Player_Models\Player1.bmp" />
+    <Image Include="..\resource\Player_Models\Player1e.bmp" />
+    <Image Include="..\resource\Player_Models\Player1n.bmp" />
+    <Image Include="..\resource\Player_Models\Player1s.bmp" />
+    <Image Include="..\resource\Player_Models\Player1w.bmp" />
+    <Image Include="..\resource\Player_Models\Player2.bmp" />
+    <Image Include="..\resource\Player_Models\Player2e.bmp" />
+    <Image Include="..\resource\Player_Models\Player2n.bmp" />
+    <Image Include="..\resource\Player_Models\Player2s.bmp" />
+    <Image Include="..\resource\Player_Models\Player2w.bmp" />
     <Image Include="..\resource\rock29x29.bmp" />
     <Image Include="..\source\icon1.ico" />
     <Image Include="..\source\resource\Board.bmp" />

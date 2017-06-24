@@ -138,5 +138,47 @@
     <Image Include="..\source\icon1.ico">
       <Filter>Resource Files\Map_Models</Filter>
     </Image>
+    <Image Include="..\resource\Map_Models\Board.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Background_Models\Menu.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Background_Models\MenuPlayer.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Background_Models\Controls.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player1e.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player1n.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player1s.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player1w.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player2e.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player2n.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player2s.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\resource\Player_Models\Player2w.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

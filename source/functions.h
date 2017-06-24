@@ -1,8 +1,9 @@
 #ifndef ZPWM_FUNCTIONS_H_
 #define ZPWM_FUNCTIONS_H_
-
+#pragma comment(lib, "winmm.lib")
 #include <Windows.h>
 #include "player.h"
+void WinSound();
 
 
 #define KEYLEFT 0x25
@@ -82,6 +83,15 @@ enum direction
   west
 };
 
+void ButtonSound()
+{
+  sndPlaySound("..//resource//przycisk.wav", SND_ASYNC);
+}
+
+void GameSound()
+{
+  sndPlaySound("..//resource//rozgrywka.wav", SND_ASYNC | SND_LOOP);
+}
 /*void DrawMenu(HDC x);
 void DrawMenuPlayer(HDC x);
 void DrawGameBoard(HDC x);
@@ -410,12 +420,14 @@ inline void checkresult(Player* player,HWND hwndDlg,int player_id)
   if ((check10_ == true)&&(player_id==1))
   {
     is_game_active = false;
+    WinSound();
     MessageBox(GetDlgItem(hwndDlg, IDD_GAMEVIEW), "Wygra³ zawodnik nr 1", " ", MB_OK);
   }
   else if ((check10_ == true) && (player_id == 2))
   {
     is_game_active = false;
-    MessageBox(GetDlgItem(hwndDlg, IDD_GAMEVIEW), "Wygra³ zawodnik nr 1", " ", MB_OK);
+    WinSound();
+    MessageBox(GetDlgItem(hwndDlg, IDD_GAMEVIEW), "Wygra³ zawodnik nr 2", " ", MB_OK);
   }
 }
 
@@ -431,5 +443,11 @@ inline void clearcheckpoints()
   check8_ = false;
   check9_ = false;
   check10_ = false;
+}
+
+
+void WinSound()
+{
+  sndPlaySound("..//resource//wygrana.wav", SND_ASYNC);
 }
 #endif
